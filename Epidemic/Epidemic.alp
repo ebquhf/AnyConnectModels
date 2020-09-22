@@ -158,6 +158,23 @@
 						<Color>-16776961</Color>
 					</Properties>
 				</Variable>
+				<Variable Class="StockVariable">
+					<Id>1600764211183</Id>
+					<Name><![CDATA[InfectedCount]]></Name>
+					<X>-50</X><Y>230</Y>
+					<Label><X>0</X><Y>-20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Array="false">
+					<EquationStyle>custom</EquationStyle>
+					<Width>20</Width>
+					<Height>20</Height>
+						<Expression><![CDATA[InfectionRate]]></Expression>
+						<InitialValue><![CDATA[0]]></InitialValue>
+						<Color/>
+					</Properties>
+				</Variable>
 				<Variable Class="Flow">
 					<Id>1600268418834</Id>
 					<Name><![CDATA[InfectionRate]]></Name>
@@ -194,6 +211,27 @@
 							<Point><X>0</X><Y>0</Y></Point>
 							<Point><X>110</X><Y>0</Y></Point>
 							<Point><X>220</X><Y>0</Y></Point>
+						</Points>
+					</Properties>
+				</Variable>
+				<Variable Class="Flow">
+					<Id>1600764279121</Id>
+					<Name><![CDATA[VaccinationRate]]></Name>
+					<X>-320</X><Y>160</Y>
+					<Label><X>0</X><Y>-20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SourceId="1600268464850" TargetId="1600268594397" External="false" Constant="false" Array="false">
+						<Formula><![CDATA[VaccRate * (Susceptible > 0 ? 1 : 0)]]></Formula>
+						<Color>-16711936</Color>
+						<ValveIndex>2</ValveIndex>
+						<Points>
+							<Point><X>0</X><Y>0</Y></Point>
+							<Point><X>0</X><Y>-200</Y></Point>
+							<Point><X>250</X><Y>-200</Y></Point>
+							<Point><X>440</X><Y>-200</Y></Point>
+							<Point><X>460</X><Y>0</Y></Point>
 						</Points>
 					</Properties>
 				</Variable>
@@ -310,6 +348,30 @@
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1600269038527</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1600764174459</Id>
+					<Name><![CDATA[VaccRate]]></Name>
+					<X>60</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[5]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1600764174457</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -469,6 +531,51 @@
 					<LineWidth>1</LineWidth>
 					<Delay>false</Delay>
 				</Link>
+				<Link SourceId="1600268418834" TargetId="1600764211183" Polarity="null">
+					<Height>20.0</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>150</X><Y>70</Y></Direction>
+					<Id>1600764262282</Id>
+					<Name><![CDATA[InfectionRate - InfectedCount]]></Name>
+					<X>-200</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
+				<Link SourceId="1600764174459" TargetId="1600764279121" Polarity="null">
+					<Height>20.0</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>-130</X><Y>-90</Y></Direction>
+					<Id>1600764427083</Id>
+					<Name><![CDATA[VaccRate - VaccinationRate]]></Name>
+					<X>60</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
+				<Link SourceId="1600268464850" TargetId="1600764279121" Polarity="null">
+					<Height>20.0</Height>
+					<PolarityPosition>0.95</PolarityPosition>
+					<Direction><X>250</X><Y>-200</Y></Direction>
+					<Id>1600764442514</Id>
+					<Name><![CDATA[Susceptible - VaccinationRate]]></Name>
+					<X>-320</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Color/>
+					<LineWidth>1</LineWidth>
+					<Delay>false</Delay>
+				</Link>
 			</Dependences>
 			<AgentLinks>
 				<AgentLink>
@@ -560,7 +667,7 @@
 					<DrawLine>true</DrawLine>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
-						<Title><![CDATA[Dataset Title]]></Title>
+						<Title><![CDATA[Susceptible]]></Title>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-16711936</Color>
 					<Expression2><![CDATA[Susceptible]]></Expression2>
@@ -569,7 +676,7 @@
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<DatasetExpression>  
-						<Title><![CDATA[Dataset Title 1]]></Title>
+						<Title><![CDATA[Infected]]></Title>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-65536</Color>
 					<Expression2><![CDATA[Infected]]></Expression2>
@@ -578,7 +685,7 @@
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<DatasetExpression>  
-						<Title><![CDATA[Dataset Title 2]]></Title>
+						<Title><![CDATA[Recovered]]></Title>
 					<Expression><![CDATA[my_dataset2]]></Expression>
 					<Color>-16776961</Color>
 					<Expression2><![CDATA[Recovered]]></Expression2>
@@ -697,6 +804,9 @@
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[DiseaseDuration]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[VaccRate]]></ParameterName>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
